@@ -15,42 +15,15 @@ XOR -> true if only one input is true, else false.
 0 XOR 0 = 0
 1 XOR 1 = 0
 
-0 XOR 1 = 1
+0 XOR 1 = 1 
 1 XOR 0 = 1
 -------------------------
 */
 
-string XORencrypt(string userInput, string XORinput)
-{
-	string binaryUser = "";
-	string binaryXOR = "";
-	string XORencrypt = "";
-	char add;
-
-	for (size_t i = 0; i < userInput.length(); i++)
-	{
-		binaryUser = ASCIItoBinary(userInput[i]);
-		binaryXOR = ASCIItoBinary(XORinput[i]);
-
-		add = binaryUser ^ binaryXOR;
-		XORencrypt = XORencrypt + add;
-	}
-
-	return XORencrypt;
-}
-
-string XORdecrypt(string binaryUser, string binaryXOR)
-{
-	string XORdecrypt = "";
-	return XORdecrypt;
-}
-
-string ASCIItoBinary(char inputChar)
-{
-	string binaryString;
-	binaryString = bitset<8>(inputChar).to_string(); // converting the output to a string to make it storable
-	return binaryString;
-}
+// FUNCTION DECLARATIONS
+string ASCIItoBinary(char inputChar);
+string XORencrypt(string userInput, string XORinput);
+string XORdecrypt(string binaryUser, string binaryXOR);
 
 int main()
 {
@@ -63,7 +36,7 @@ int main()
 	int inputSize = 0;
 	int check = 0;
 
-	cout << "Welcome!\n";
+	cout << "Welcome! What would you like to XORder today?\n";
 
 	do {
 			cout << "Enter a sentence, without spaces: ";
@@ -104,8 +77,47 @@ int main()
 
 	// cout << "userSentence[4] = " << userSentence[4] << endl;
 
-	XORencrypt(userInput, XORinput);
+	cout << "XOR Result: " << XORencrypt(userInput, XORinput);
 	
 
 return 0;
 }
+
+string ASCIItoBinary(char inputChar)
+{
+	string binaryString;
+	binaryString = bitset<7>(inputChar).to_string(); // converting the output to a string to make it storable (ASCII is 7bit)
+	return binaryString;
+}
+
+
+string XORencrypt(string userInput, string XORinput)
+{
+	string binaryUser = "";
+	string binaryXOR = "";
+
+	string XORencrypt = "";
+	char bitResult;
+
+	for (int i = 0; i < userInput.length(); i++)
+	{
+		binaryUser = ASCIItoBinary(userInput[i]);
+		binaryXOR = ASCIItoBinary(XORinput[i]);
+
+		for (int j = 0; j < binaryUser.length(); j++)
+		{
+			bitResult = ((binaryUser[j] - '0') ^ (binaryXOR[j] - '0')) + '0'; // https://www.geeksforgeeks.org/xor-of-two-binary-strings/
+			XORencrypt = XORencrypt + bitResult;
+		}
+
+	}
+
+	return XORencrypt;
+}
+
+string XORdecrypt(string binaryUser, string binaryXOR)
+{
+	string XORdecrypt = "";
+	return XORdecrypt;
+}
+
