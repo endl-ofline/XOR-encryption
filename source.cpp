@@ -35,6 +35,8 @@ int main()
 
 	int inputSize = 0;
 	int check = 0;
+	int userDecrypt = 0;
+	int decryptCheck = 0;
 
 	cout << "Welcome! What would you like to XORder today?\n" << endl;
 
@@ -43,13 +45,13 @@ int main()
 			cin >> userInput;
 			inputSize = userInput.length();
 
-			cout << "Enter a sentence " << inputSize << " characters long: ";
+			cout << "Enter a sentence " << inputSize << " characters long (without spaces): ";
 			cin >> XORinput;
 			cout << endl;
 
 		if (userInput.length() != XORinput.length())
 		{
-			cout << "Please enter sentences that are the same length!" << endl;
+			cout << "Please enter sentences that are the same length!\n" << endl;
 			check = 0;
 		}
 		else if (userInput.length() == XORinput.length())
@@ -77,7 +79,18 @@ int main()
 
 	// cout << "userSentence[4] = " << userSentence[4] << endl;
 
-	cout << "XOR Result: " << XORencrypt(userInput, XORinput);
+	cout << "Encryption Result: " << XORencrypt(userInput, XORinput);
+	string XORresult = XORencrypt(userInput, XORinput);
+
+	do
+	{
+		cout << "\nType '1' to decrypt your sentence: ";
+		cin >> userDecrypt;
+
+	} while
+		(userDecrypt != 1);
+
+	cout << "\nDecryption Result: " << XORdecrypt(userInput, XORresult) << endl;
 	
 
 return 0;
@@ -129,9 +142,30 @@ string XORencrypt(string userInput, string XORinput)
 	return XORencrypt;
 }
 
-string XORdecrypt(string binaryUser, string binaryXOR)
+string XORdecrypt(string binaryUser, string XORresult)
 {
 	string XORdecrypt = "";
+	char bitResult;
+
+	int spaceCounter = 0;
+
+	for (int j = 0; j < binaryUser.length(); j++)
+	{
+		if (spaceCounter == 7)
+		{
+			XORdecrypt += " "; // append a space
+			j--; // correct what would be a missing value
+			spaceCounter = 0; // reset
+
+		}
+		else
+		{
+			bitResult = ((binaryUser[j] - '0') ^ (XORresult[j] - '0')) + '0'; // https://www.geeksforgeeks.org/xor-of-two-binary-strings/
+			XORdecrypt = XORdecrypt + bitResult;
+			spaceCounter++;
+		}
+	}
+
 	return XORdecrypt;
 }
 
