@@ -36,7 +36,7 @@ int main()
 	int inputSize = 0;
 	int check = 0;
 
-	cout << "Welcome! What would you like to XORder today?\n";
+	cout << "Welcome! What would you like to XORder today?\n" << endl;
 
 	do {
 			cout << "Enter a sentence, without spaces: ";
@@ -99,15 +99,29 @@ string XORencrypt(string userInput, string XORinput)
 	string XORencrypt = "";
 	char bitResult;
 
+	int spaceCounter = 0;
+
 	for (int i = 0; i < userInput.length(); i++)
 	{
 		binaryUser = ASCIItoBinary(userInput[i]);
 		binaryXOR = ASCIItoBinary(XORinput[i]);
 
+
 		for (int j = 0; j < binaryUser.length(); j++)
 		{
-			bitResult = ((binaryUser[j] - '0') ^ (binaryXOR[j] - '0')) + '0'; // https://www.geeksforgeeks.org/xor-of-two-binary-strings/
-			XORencrypt = XORencrypt + bitResult;
+			if (spaceCounter == 7)
+			{
+				XORencrypt += " "; // append a space
+				j--; // correct what would be a missing value
+				spaceCounter = 0; // reset
+				
+			}
+			else
+			{
+				bitResult = ((binaryUser[j] - '0') ^ (binaryXOR[j] - '0')) + '0'; // https://www.geeksforgeeks.org/xor-of-two-binary-strings/
+				XORencrypt = XORencrypt + bitResult;
+				spaceCounter++;
+			}
 		}
 
 	}
