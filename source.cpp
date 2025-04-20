@@ -30,8 +30,8 @@ int main()
 	string userInput = "";
 	string XORinput = "";
 
-	string userSentence[50] = {};
-	string XORsentence[50] = {};
+	// string userSentence[50] = {};
+	// string XORsentence[50] = {};
 
 	int inputSize = 0;
 	int check = 0;
@@ -61,26 +61,8 @@ int main()
 
 	} while (check != 1);
 	
-	for (size_t i = 0; i < userInput.length(); i++) // "size_t is an unsigned integer data type...used to represent the size of objects in bytes..." (geeksforgeeks, 2025) https://www.geeksforgeeks.org/size_t-data-type-c-language/
-	{ // for the length of the inputted string...
-		// cout << "USER SENTENCE: ";
-		userSentence[i] = ASCIItoBinary(userInput[i]); // run the ASCIItoBinary function on the current userInput value
-		// cout << userSentence[i] << " " << endl;
-		
-	}
-
-	for (size_t i = 0; i < XORinput.length(); i++) 
-	{ 
-		// cout << "XOR SENTENCE: ";
-		XORsentence[i] = ASCIItoBinary(XORinput[i]);
-		// cout << XORsentence[i] << " " << endl;
-
-	}
-
-	// cout << "userSentence[4] = " << userSentence[4] << endl;
-
-	cout << "Encryption Result: " << XORencrypt(userInput, XORinput);
-	string XORresult = XORencrypt(userInput, XORinput);
+	cout << "Encryption Result: " << XORencrypt(userInput, XORinput); // function call
+	string XORresult = XORencrypt(userInput, XORinput); // storing result for decryption
 
 	do
 	{
@@ -114,15 +96,15 @@ string XORencrypt(string userInput, string XORinput)
 
 	int spaceCounter = 0;
 
-	for (int i = 0; i < userInput.length(); i++)
+	for (int i = 0; i < userInput.length(); i++) // for every character
 	{
-		binaryUser = ASCIItoBinary(userInput[i]);
-		binaryXOR = ASCIItoBinary(XORinput[i]);
+		binaryUser = ASCIItoBinary(userInput[i]); // use the function to convert to the binary
+		binaryXOR = ASCIItoBinary(XORinput[i]); // stores working character in these strings
 
 
-		for (int j = 0; j < binaryUser.length(); j++)
+		for (int j = 0; j < binaryUser.length(); j++) // works through each binary bit in the byte
 		{
-			if (spaceCounter == 7)
+			if (spaceCounter == 7) // every full byte
 			{
 				XORencrypt += " "; // append a space
 				j--; // correct what would be a missing value
@@ -131,37 +113,37 @@ string XORencrypt(string userInput, string XORinput)
 			}
 			else
 			{
-				bitResult = ((binaryUser[j] - '0') ^ (binaryXOR[j] - '0')) + '0'; // https://www.geeksforgeeks.org/xor-of-two-binary-strings/
-				XORencrypt = XORencrypt + bitResult;
+				bitResult = ((binaryUser[j] - '0') ^ (binaryXOR[j] - '0')) + '0'; // https://www.geeksforgeeks.org/xor-of-two-binary-strings/ // converts each character to its integer equivalent before XORing - then converting back and storing
+				XORencrypt = XORencrypt + bitResult; // appended to the string
 				spaceCounter++;
 			}
 		}
 
 	}
 
-	return XORencrypt;
+	return XORencrypt; // return full string
 }
 
-string XORdecrypt(string binaryUser, string XORresult)
+string XORdecrypt(string binaryUser, string XORresult) // original representation of userInput
 {
 	string XORdecrypt = "";
 	char bitResult;
 
 	int spaceCounter = 0;
 
-	for (int j = 0; j < binaryUser.length(); j++)
+	for (int j = 0; j < binaryUser.length(); j++) // iterates through each bit
 	{
-		if (spaceCounter == 7)
+		if (spaceCounter == 7) //  space handling
 		{
 			XORdecrypt += " "; // append a space
 			j--; // correct what would be a missing value
 			spaceCounter = 0; // reset
 
 		}
-		else
+		else // to remove the XOR line:
 		{
-			bitResult = ((binaryUser[j] - '0') ^ (XORresult[j] - '0')) + '0'; // https://www.geeksforgeeks.org/xor-of-two-binary-strings/
-			XORdecrypt = XORdecrypt + bitResult;
+			bitResult = ((binaryUser[j] - '0') ^ (XORresult[j] - '0')) + '0'; // https://www.geeksforgeeks.org/xor-of-two-binary-strings/ // conversion
+			XORdecrypt = XORdecrypt + bitResult; // storage
 			spaceCounter++;
 		}
 	}
