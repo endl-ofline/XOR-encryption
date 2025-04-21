@@ -41,6 +41,7 @@ int main()
 	int userDecrypt = 0;
 	int decryptCheck = 0;
 	int query = 0;
+	int innerQuery = 0;
 
 	cout << "Welcome! What would you like to XORder today?\n";
 	do
@@ -52,9 +53,22 @@ int main()
 
 		if (query == 1)
 		{
-			cout << "Enter a phrase, without spaces: ";
-			cin >> userInput;
-			inputSize = userInput.length();
+			do
+			{
+				cout << "Enter a phrase, without spaces: ";
+				cin >> userInput;
+				inputSize = userInput.length();
+
+				if (inputSize > 102)
+				{
+					cout << "\nPlease keep your input less than 100..." << endl;
+					innerQuery = 1;
+				}
+				else
+				{
+					innerQuery = 2;
+				}
+			} while (innerQuery != 2);
 
 			XORinput = providedXOR(baseXORinput, inputSize);
 
