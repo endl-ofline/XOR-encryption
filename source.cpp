@@ -5,11 +5,6 @@ CMP111 Personal Project (April 2025)
 XOR Encryption | Digital Forensics
 */
 
-#include <iostream>
-#include <bitset>
-#include <string>
-using namespace std;
-
 /*
 XOR -> true if only one input is true, else false.
 -------------------------
@@ -20,6 +15,12 @@ XOR -> true if only one input is true, else false.
 1 XOR 0 = 1
 -------------------------
 */
+
+#include <iostream>
+#include <bitset>
+#include <string>
+#include <fstream>
+using namespace std;
 
 // FUNCTION DECLARATIONS
 string ASCIItoBinary(char inputChar);
@@ -35,7 +36,11 @@ int main()
 	string baseXORinput = "supercalifragilisticexpialidocioussupercalifragilisticexpialidocioussupercalifragilisticexpialidocious";
 	string XORinput = "";
 	string XORresult = "";
+	string userXOR = "";
+	string lines[300] = { "" };
+	string line = "";
 
+	int lineCount = 0;
 	int inputSize = 0;
 	int check = 0;
 	int userDecrypt = 0;
@@ -46,7 +51,7 @@ int main()
 	cout << "Welcome! What would you like to XORder today?\n";
 	do
 	{
-		cout << "\n1 - XOR with a provided key.\n2 - XOR with an inputted key.\n3 - to exit.\n" ;
+		cout << "\n1 - XOR with a provided key.\n2 - XOR with an inputted key.\n3 - read in a file\n4 - to exit.\n" ;
 		cout << "Please enter your choice: ";
 		cin >> query;
 		cout << endl;
@@ -55,8 +60,9 @@ int main()
 		{
 			do
 			{
-				cout << "Enter a phrase, without spaces: ";
-				cin >> userInput;
+				cout << "Enter a phrase: ";
+				cin.ignore();
+				getline(cin, userInput); // takes in entire sentence
 				inputSize = userInput.length();
 
 				if (inputSize > 102)
@@ -72,19 +78,30 @@ int main()
 
 			XORinput = providedXOR(baseXORinput, inputSize);
 
+			cout << "Length of userInput: " << inputSize << endl;
+			cout << "Length of XORinput: " << XORinput.length() << endl;
+
+			cout << "Binary User Input: " << binaryInput(userInput) << endl;
+			cout << "Binary XOR Key: " << binaryInput(XORinput) << endl;
+
+
 			XORresult = XORencrypt(userInput, XORinput);
 			cout << "Encryption Result: " << XORresult << endl;
+
 		}
 		else if (query == 2)
 		{
 			do {
-				cout << "Enter a phrase, without spaces: ";
-				cin >> userInput;
+				cout << "Enter a phrase: ";
+				cin.ignore();
+				getline(cin, userInput); // takes in entire sentence
 				inputSize = userInput.length();
 
-				cout << "Enter a phrase " << inputSize << " characters long (without spaces): ";
-				cin >> XORinput;
-				cout << endl;
+				cout << "Enter a phrase " << inputSize << " characters long: ";
+				// cin.ignore();
+				getline(cin, XORinput); 
+
+				cout << endl; // magic buffer-flushing endl DO NOT REMOVE!!!!!! >:(( (it will break and i will cry)
 
 				if (userInput.length() != XORinput.length())
 				{
@@ -116,6 +133,38 @@ int main()
 		}
 		else if (query == 3)
 		{
+			// the following function modified is from GeeksforGeeks(2024) How to Read File into String in C++?. Available at: https://www.geeksforgeeks.org/how-to-read-file-into-string-in-cpp/ [Accessed: 30-04-25]
+
+			string filePath = "hellothere.txt"; // only opens the file - no processing
+			ifstream file(filePath); // filestream = input file stream, file = an object
+
+			if (!file.is_open()) // returns 'true' if the file has not opened
+			{
+				cerr << "Failed to open file: " << filePath << endl; // cerr = standard error stream, unbuffered (outputs errors immediately to console)
+				return 1;
+			}
+		
+			while (getline(file, line)) // reads a single line from the file stream 'file', loop continues until getline() can no longer read from the file
+			{
+				cout << "Line " << lineCount << ": " << line << endl;
+				lines[lineCount] = line;
+				
+				inputSize = lines[lineCount].length();
+				// cout << "Length of lines[lineCount].length(): " << inputSize << endl;
+
+				XORinput = providedXOR(baseXORinput, inputSize);
+				XORresult = XORencrypt(lines[lineCount], XORinput);
+				cout << "Encryption Result: " << XORresult << endl << endl;
+
+				lineCount++;
+			}
+
+			file.close();
+
+			// end of function from (GeeksforGeeks, 2024)
+		}
+		else if (query == 4)
+		{
 			break;
 		}
 		else
@@ -135,8 +184,9 @@ string ASCIItoBinary(char inputChar)
 	return binaryString;
 }
 
-string binarytoASCII(string input) // https://www.geeksforgeeks.org/program-to-convert-given-binary-to-its-equivalent-ascii-character-string/
-{ // FUNCTION USES SEGMENTS FROM WEBSITE ^^
+string binarytoASCII(string input)
+{ 
+	// the following function modified is from GeeksforGeeks(2024) Program to convert given Binary to its equivalent ASCII character string. Available at: https://www.geeksforgeeks.org/program-to-convert-given-binary-to-its-equivalent-ascii-character-string/ [Accessed: 20-04-25]
 	string binaryString = input;
 	string ASCII = "";
 
@@ -153,7 +203,8 @@ string binarytoASCII(string input) // https://www.geeksforgeeks.org/program-to-c
 		ASCII += static_cast<char>(currentValue);
 	}
 	return ASCII; // moved out of loop to catch all values
-}
+
+} // end of function from (GeeksforGeeks, 2024)
 
 string binaryInput(string userInput)
 {
@@ -164,8 +215,6 @@ string binaryInput(string userInput)
 	{
 		binaryUser = ASCIItoBinary(userInput[i]);
 		binaryResult += binaryUser; // append rather than add the whole string on again (do NOT do that...)
-
-
 	}
 
 	return binaryResult;
@@ -179,7 +228,7 @@ string providedXOR(string baseXORinput, int length)
 	{
 		adjustedKey += baseXORinput[i];
 	}
-	
+	// cout << "Adjusted Key: " << adjustedKey << endl;
 	return adjustedKey;
 }
 
@@ -199,12 +248,11 @@ string XORencrypt(string userInput, string XORinput)
 
 		for (int j = 0; j < binaryUser.length(); j++)
 		{
-			bitResult = ((binaryUser[j] - '0') ^ (binaryXOR[j] - '0')) + '0'; 
-			XORencrypt = XORencrypt + bitResult;
+			bitResult = ((binaryUser[j] - '0') ^ (binaryXOR[j] - '0') + '0'); // << Copilot used to aid here
+			XORencrypt += bitResult; // storage
 		}
 
 	}
-
 	return XORencrypt;
 }
 
@@ -215,8 +263,8 @@ string XORdecrypt(string binaryUser, string XORresult) // original representatio
 
 	for (int j = 0; j < binaryUser.length(); j++) // iterates through each bit
 	{
-		bitResult = ((binaryUser[j] - '0') ^ (XORresult[j] - '0')) + '0';
-		XORdecrypt +=bitResult; // storage
+		bitResult = ((binaryUser[j] - '0') ^ (XORresult[j] - '0')) + '0'; // << Copilot used to aid here
+		XORdecrypt += bitResult; // storage
 	}
 	return XORdecrypt;
 }
