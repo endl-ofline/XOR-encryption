@@ -39,9 +39,11 @@ int main()
 	string userXOR = "";
 	string lines[300] = { "" };
 	string line = "";
+	string binaryXORinput = "";
 
 	int lineCount = 0;
 	int inputSize = 0;
+	int XORsize = 0;
 	int check = 0;
 	int userDecrypt = 0;
 	int decryptCheck = 0;
@@ -51,7 +53,7 @@ int main()
 	cout << "Welcome! What would you like to XORder today?\n";
 	do
 	{
-		cout << "\n1 - XOR with a provided key.\n2 - XOR with an inputted key.\n3 - read in a file\n4 - to exit.\n" ;
+		cout << "\n1 - XOR with a provided key.\n2 - XOR with an inputted key.\n3 - read in a file\n4 - decrypt an existing XOR.\n5 - to exit.\n" ;
 		cout << "Please enter your choice: ";
 		cin >> query;
 		cout << endl;
@@ -165,6 +167,39 @@ int main()
 		}
 		else if (query == 4)
 		{
+			cout << "Enter the encrypted sentence: ";
+			cin.ignore();
+			getline(cin, userInput); // takes in entire sentence
+			inputSize = userInput.length();
+			cout << "userInput: " << userInput << endl;
+
+			cout << endl;
+
+			cout << "Enter the XOR key: ";
+			getline(cin, XORinput); // takes in entire sentence
+			cout << "XORinput:" << XORinput << endl;
+
+			binaryXORinput = binaryInput(XORinput);
+			cout << "Binary v. XORinput: " << binaryXORinput << endl;
+
+			XORsize = binaryXORinput.length();
+
+			cout << "Length of userInput: " << inputSize << endl;
+			cout << "Length of XORinput: " << XORsize << endl;
+
+			cout << "Binary User Input: " << userInput << endl;
+			cout << "Binary XOR Key: " << binaryXORinput << endl;
+
+
+			XORresult = XORdecrypt(userInput, binaryInput(XORinput));
+			cout << "Binary Decryption Result: " << XORresult << endl;
+
+			cout << "Decryption Result: " << binarytoASCII(XORresult) << endl;
+
+			
+		}
+		else if (query == 5)
+		{
 			break;
 		}
 		else
@@ -172,7 +207,7 @@ int main()
 			cout << "Invalid. Please try again.\n" << endl;
 			query = 0;
 		}
-	} while (query != 1 || query != 2);
+	} while (query != 5);
 
 	return 0;
 }
@@ -268,4 +303,5 @@ string XORdecrypt(string binaryUser, string XORresult) // original representatio
 	}
 	return XORdecrypt;
 }
+
 
