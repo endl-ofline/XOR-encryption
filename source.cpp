@@ -22,7 +22,7 @@ string XORdecrypt(string binaryUser, string binaryXOR);
 int main()
 {
 	string userInput = "";
-	string baseXORinput = "supercalifragilisticexpialidocioussupercalifragilisticexpialidocioussupercalifragilisticexpialidocious";
+	string baseXORinput = "supercalifragilisticexpialidocioussupercalifragilisticexpialidocioussupercalifragilisticexpialidocioussupercalifragilisticexpialidocioussupercalifragilisticexpialidocioussupercalifragilisticexpialidocious";
 	string XORinput = "";
 	string XORresult = "";
 	string userXOR = "";
@@ -42,7 +42,7 @@ int main()
 	cout << "Welcome! What would you like to XORder today?\n";
 	do
 	{
-		cout << "\n1 - XOR with a default key.\n2 - XOR with a key of your choice.\n3 - read input from a file\n4 - decrypt an existing XOR.\n5 - exit program.\n" ;
+		cout << "\n1 - XOR with a default key.\n2 - XOR with a key of your choice.\n3 - encrypt a file\n4 - decrypt a file.\n5 - decrypt an existing XOR.\n6 - exit program.\n" ;
 		cout << "Please enter your choice: ";
 		cin >> query;
 		cout << endl;
@@ -56,9 +56,9 @@ int main()
 				getline(cin, userInput); // takes in entire sentence
 				inputSize = userInput.length();
 
-				if (inputSize > 102) // 102 is the total length of baseXORinput
+				if (inputSize > 202) // 204(ish) is the total length of baseXORinput
 				{
-					cout << "\nPlease keep your input less than 100..." << endl;
+					cout << "\nPlease keep your input less than 200..." << endl;
 					inputLimit = 1;
 				}
 				else
@@ -123,7 +123,7 @@ int main()
 		{
 			// the following function modified is from GeeksforGeeks(2024) How to Read File into String in C++?. Available at: https://www.geeksforgeeks.org/how-to-read-file-into-string-in-cpp/ [Accessed: 30-04-25]
 
-			string filePath = "hellothere.txt"; // only opens the file - no processing
+			string filePath = "file.txt"; // only opens the file - no processing
 			ifstream file(filePath); // filestream = input file stream, file = an object
 
 			if (!file.is_open()) // returns 'true' if the file has not opened
@@ -151,7 +151,41 @@ int main()
 
 			// end of function from (GeeksforGeeks, 2024)
 		}
-		else if (query == 4) // decrypt an existing XOR cipher
+		else if (query == 4) // decrypt input from a file
+		{
+			// the following function modified is from GeeksforGeeks(2024) How to Read File into String in C++?. Available at: https://www.geeksforgeeks.org/how-to-read-file-into-string-in-cpp/ [Accessed: 30-04-25]
+
+			string filePath = "file.txt"; // only opens the file - no processing
+			ifstream file(filePath); // filestream = input file stream, file = an object
+
+			if (!file.is_open()) // returns 'true' if the file has not opened
+			{
+				cerr << "Failed to open file: " << filePath << endl; // cerr = standard error stream, unbuffered (outputs errors immediately to console)
+				return 1;
+			}
+
+			while (getline(file, line)) // reads a single line from the file stream 'file', loop continues until getline() can no longer read from the file
+			{
+				// cout << "Line " << lineCount << ": " << line << endl;
+				lines[lineCount] = line;
+
+				inputSize = lines[lineCount].length();
+				// cout << "Length of lines[lineCount].length(): " << inputSize << endl;
+				
+				// convert from plaintext to binary
+
+				XORinput = providedXOR(baseXORinput, inputSize);
+				XORresult = XORdecrypt(line, binaryInput(XORinput));
+				cout << "Decryption Result: " << binarytoASCII(XORresult) << endl;
+
+				lineCount++;
+			}
+
+			file.close();
+
+			// end of function from (GeeksforGeeks, 2024)
+			}
+		else if (query == 5) // decrypt an existing XOR cipher
 		{
 			cout << "Enter the encrypted sentence: "; // input will already be in binary
 			cin.ignore();
@@ -181,7 +215,7 @@ int main()
 
 			
 		}
-		else if (query == 5) // exit
+		else if (query == 6) // exit
 		{
 			break;
 		}
@@ -190,7 +224,7 @@ int main()
 			cout << "Invalid. Please try again.\n" << endl;
 			query = 0;
 		}
-	} while (query != 5);
+	} while (query != 6);
 
 	return 0;
 }
