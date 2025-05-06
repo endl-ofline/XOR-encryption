@@ -238,21 +238,21 @@ string ASCIItoBinary(char inputChar) // takes an ASCII character and converts it
 
 string binarytoASCII(string input) // converts from 8bit binary to an ASCII character
 { 
-	// the following function modified is from GeeksforGeeks(2024) Program to convert given Binary to its equivalent ASCII character string. Available at: https://www.geeksforgeeks.org/program-to-convert-given-binary-to-its-equivalent-ascii-character-string/ [Accessed: 20-04-25]
+	// the following function modified is from GeeksforGeeks(2024) Program to convert given Binary to its equivalent ASCII character string. 
+	// Available at: https://www.geeksforgeeks.org/program-to-convert-given-binary-to-its-equivalent-ascii-character-string/ [Accessed: 20-04-25]
 	string binaryString = input;
 	string ASCII = "";
 
-	int byte = 8;
 	int currentValue = 0;
 
 	for (int i = 0; i < input.length(); i += 8) // for every character
 	{
 		for (int j = 0; j < 8; j++)
 		{
-			currentValue <<= 1;
-			currentValue |= (binaryString[i + j] - '0');
+			currentValue <<= 1; // shift left operation
+			currentValue |= (binaryString[i + j] - '0'); // converts to an integer and appends onto currentValue
 		}
-		ASCII += static_cast<char>(currentValue);
+		ASCII += static_cast<char>(currentValue); // converts integer to ASCII character, which is appended onto the string
 	}
 	return ASCII; // moved out of loop to catch all values
 
