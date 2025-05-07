@@ -106,7 +106,7 @@ int main()
 			} while (check != 1);
 
 			XORresult = XORencrypt(userInput, XORinput); // function returns the encryption result of the two parameters
-			cout << "Encryption Result: " << XORresult;
+			cout << "Encryption Result: " << XORresult << endl;
 
 			// do
 			{
@@ -116,8 +116,8 @@ int main()
 
 			string decryption = XORdecrypt(binaryInput(XORinput), XORresult);
 
-			cout << "\nBinary Decryption Result: " << decryption; // raw return 
-			cout << "\nASCII Decryption Result: " << binarytoASCII(decryption) << endl << endl; // converted return 
+			// cout << "\nBinary Decryption Result: " << decryption; // raw return 
+			// cout << "\nASCII Decryption Result: " << binarytoASCII(decryption) << endl << endl; // converted return 
 		}
 		else if (query == 3) // read input from a file
 		{
