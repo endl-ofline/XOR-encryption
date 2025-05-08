@@ -260,7 +260,7 @@ string binaryInput(string userInput) // converts each character in a string to b
 	for (int i = 0; i < userInput.length(); i++)
 	{
 		binaryUser = ASCIItoBinary(userInput[i]);
-		binaryResult += binaryUser; // append rather than add the whole string on again (do NOT do that...)
+		binaryResult += binaryUser; // append rather than add the whole string on again
 	}
 
 	return binaryResult;
@@ -281,6 +281,8 @@ string providedXOR(string baseXORinput, int length) // variable XOR key made up 
 
 string XORencrypt(string userInput, string XORinput) // encryption function, converts to binary and returns one string
 {
+	// the following function modified is from GeeksforGeeks(2024) XOR of two Binary Strings. 
+	// Available at: https://www.geeksforgeeks.org/xor-of-two-binary-strings/ [Accessed: 20-04-25]
 	string binaryUser = "";
 	string binaryXOR = "";
 
@@ -294,25 +296,27 @@ string XORencrypt(string userInput, string XORinput) // encryption function, con
 
 		for (int j = 0; j < binaryUser.length(); j++) // eight times - one for each bit in the byte
 		{
-			bitResult = ((binaryUser[j] - '0') ^ (binaryXOR[j] - '0') + '0'); // XOR each bit << Copilot used to aid this line here
+			bitResult = ((binaryUser[j] - '0') ^ (binaryXOR[j] - '0') + '0'); // XOR each bit
 			XORencrypt += bitResult; // storage
 		}
 
 	}
 	return XORencrypt;
-}
+} // end of function from (GeeksforGeeks, 2024)
 
 string XORdecrypt(string binaryUser, string XORresult) // original representation of userInput
 {
+	// the following function modified is from GeeksforGeeks(2024) XOR of two Binary Strings. 
+	// Available at: https://www.geeksforgeeks.org/xor-of-two-binary-strings/ [Accessed: 20-04-25]
 	string XORdecrypt = "";
 	char bitResult;
 
 	for (int j = 0; j < binaryUser.length(); j++) // iterates through each bit
 	{
-		bitResult = ((binaryUser[j] - '0') ^ (XORresult[j] - '0')) + '0'; // XOR each bit << Copilot used to aid here
+		bitResult = ((binaryUser[j] - '0') ^ (XORresult[j] - '0')) + '0'; // XOR each bit
 		XORdecrypt += bitResult; // storage
 	}
 	return XORdecrypt;
-}
+} // end of function from (GeeksforGeeks, 2024)
 
 
