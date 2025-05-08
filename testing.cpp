@@ -7,6 +7,7 @@ XOR Encryption | Digital Forensics
 #include <iostream>
 #include <bitset>
 #include <string>
+#include <fstream>
 using namespace std;
 
 /*
@@ -62,11 +63,56 @@ int main()
 	string userInput = "Hello There\n"; // string (will be the input sentence)
 	cout << "userInput: " << userInput << endl;
 	
-	for (size_t i = 0; i < userInput.length(); i++) // "size_t is an unsigned integer data type...used to represent the size of objects in bytes..." (geeksforgeeks, 2025) https://www.geeksforgeeks.org/size_t-data-type-c-language/
+	for (int i = 0; i < userInput.length(); i++)
 	{ // for the length of the inputted string...
 		ASCIItoBinary(userInput[i]); // run the ASCIItoBinary function on the current userInput value
 	}
 	cout << "-----------------------------------------------------\n"; // visual seperation between tests
+
+	// ----------------------------------------------------------------------------
+	// OPENING A FILE - FUNCTION FROM https://www.geeksforgeeks.org/how-to-open-and-close-file-in-cpp/ [Accessed: 20th April].
+
+	ofstream fio("hellothere.txt", ios::app); // output file stream - object name (fio) - file (hellothere.txt) - file mode (ios::app) = append
+
+	if (fio.is_open()) // if the file object is open
+	{
+		cout << "File opened successfully!" << endl;
+
+		fio << "General Kenobi!" << endl; // append "General Kenobi" to the file
+
+		fio.close(); // close object
+		cout << "File closed." << endl;
+	}
+	else
+	{
+		cout << "Error opening file :((" << endl;
+	}
+
+	// ----------------------------------------------------------------------------
+	// FILE HANDLING - FUNCTION FROM https://www.geeksforgeeks.org/how-to-read-file-into-string-in-cpp/ [Accessed 20th April].
+
+		// get the filepath
+		string filePath = "hellothere.txt";
+
+		// Open the file using ifstream
+		ifstream file(filePath);
+
+		// confirm file opening
+		if (!file.is_open()) {
+			// print error message and return
+			cerr << "Failed to open file: " << filePath << endl;
+
+			return 1;
+		}
+
+		// Read the file line by line into a string
+		string line;
+		while (getline(file, line)) {
+			cout << line << endl;
+		}
+
+		// Close the file
+		file.close();
 
 	return 0;
 }
