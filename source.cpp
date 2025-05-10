@@ -42,7 +42,7 @@ int main()
 	cout << "Welcome! What would you like to XORder today?\n";
 	do
 	{
-		cout << "\n1 - XOR with a default key.\n2 - XOR with a key of your choice.\n3 - encrypt a file\n4 - decrypt a file.\n5 - decrypt an existing XOR.\n6 - exit program.\n" ;
+		cout << "\n1 - XOR with a default key.\n2 - XOR with a key of your choice.\n3 - encrypt a file\n4 - decrypt a file.\n5 - decrypt an existing XOR.\n6 - exit program.\n";
 		cout << "Please enter your choice: ";
 		cin >> query;
 		cout << endl;
@@ -89,7 +89,7 @@ int main()
 
 				cout << "Enter a phrase " << inputSize << " characters long: ";
 				// cin.ignore();
-				getline(cin, XORinput); 
+				getline(cin, XORinput);
 
 				cout << endl; // endl clears the buffer and prevents cutoff
 
@@ -124,7 +124,7 @@ int main()
 			// the following function modified is from GeeksforGeeks(2024) How to Read File into String in C++?. 
 			// Available at: https://www.geeksforgeeks.org/how-to-read-file-into-string-in-cpp/ [Accessed: 30-04-25]
 
-			string filePath = "hellothere.txt"; // only opens the file - no processing
+			string filePath = "starwarsQuote.txt"; // only opens the file - no processing
 			ifstream file(filePath); // filestream = input file stream, file = an object
 
 			if (!file.is_open()) // returns 'true' if the file has not opened
@@ -132,12 +132,12 @@ int main()
 				cerr << "Failed to open file: " << filePath << endl; // cerr = standard error stream, unbuffered (outputs errors immediately to console)
 				return 1;
 			}
-		
+
 			while (getline(file, line)) // reads a single line from the file stream 'file', loop continues until getline() can no longer read from the file
 			{
 				cout << "Line " << lineCount << ": " << line << endl;
 				lines[lineCount] = line;
-				
+
 				inputSize = lines[lineCount].length();
 				// cout << "Length of lines[lineCount].length(): " << inputSize << endl;
 
@@ -173,7 +173,7 @@ int main()
 
 				inputSize = lines[lineCount].length();
 				// cout << "Length of lines[lineCount].length(): " << inputSize << endl;
-				
+
 				// convert from plaintext to binary
 
 				XORinput = providedXOR(baseXORinput, inputSize);
@@ -186,7 +186,7 @@ int main()
 			file.close();
 
 			// end of function from (GeeksforGeeks, 2024)
-			}
+		}
 		else if (query == 5) // decrypt an existing XOR cipher
 		{
 			cout << "Enter the encrypted sentence: "; // input will already be in binary
@@ -231,7 +231,7 @@ string ASCIItoBinary(char inputChar) // takes an ASCII character and converts it
 }
 
 string binarytoASCII(string input) // converts from 8bit binary to an ASCII character
-{ 
+{
 	// the following function modified is from GeeksforGeeks(2024) Program to convert given Binary to its equivalent ASCII character string. 
 	// Available at: https://www.geeksforgeeks.org/program-to-convert-given-binary-to-its-equivalent-ascii-character-string/ [Accessed: 20-04-25]
 	string binaryString = input;
