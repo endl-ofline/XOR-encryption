@@ -72,9 +72,6 @@ int main()
 			cout << "Length of userInput: " << inputSize << endl;
 			cout << "Length of XORinput: " << XORinput.length() << endl;
 
-			// cout << "Binary User Input: " << binaryInput(userInput) << endl;
-			// cout << "Binary XOR Key: " << binaryInput(XORinput) << endl;
-
 			XORresult = XORencrypt(userInput, XORinput);
 			cout << "Encryption Result: " << XORresult << endl;
 
