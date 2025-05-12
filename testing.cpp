@@ -62,7 +62,7 @@ int main()
 
 	string userInput = "Hello There\n"; // string (will be the input sentence)
 	cout << "userInput: " << userInput << endl;
-	
+
 	for (int i = 0; i < userInput.length(); i++)
 	{ // for the length of the inputted string...
 		ASCIItoBinary(userInput[i]); // run the ASCIItoBinary function on the current userInput value
@@ -92,27 +92,27 @@ int main()
 	// FILE HANDLING - FUNCTION FROM https://www.geeksforgeeks.org/how-to-read-file-into-string-in-cpp/ [Accessed 20th April].
 
 		// get the filepath
-		string filePath = "hellothere.txt";
+	string filePath = "hellothere.txt";
 
-		// Open the file using ifstream
-		ifstream file(filePath);
+	// Open the file using ifstream
+	ifstream file(filePath);
 
-		// confirm file opening
-		if (!file.is_open()) {
-			// print error message and return
-			cerr << "Failed to open file: " << filePath << endl;
+	// confirm file opening
+	if (!file.is_open()) {
+		// print error message and return
+		cerr << "Failed to open file: " << filePath << endl;
 
-			return 1;
-		}
+		return 1;
+	}
 
-		// Read the file line by line into a string
-		string line;
-		while (getline(file, line)) {
-			cout << line << endl;
-		}
+	// Read the file line by line into a string
+	string line;
+	while (getline(file, line)) {
+		cout << line << endl;
+	}
 
-		// Close the file
-		file.close();
+	// Close the file
+	file.close();
 
 	return 0;
 }
