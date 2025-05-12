@@ -105,7 +105,7 @@ int main()
 			XORresult = XORencrypt(userInput, XORinput); // function returns the encryption result of the two parameters
 			cout << "Encryption Result: " << XORresult << endl;
 
-			string decryption = XORdecrypt(binaryInput(XORinput), XORresult); 
+			string decryption = XORdecrypt(binaryInput(XORinput), XORresult);
 		}
 		else if (query == 3) // read input from a file
 		{
@@ -156,14 +156,10 @@ int main()
 
 			while (getline(file, line)) // reads a single line from the file stream 'file', loop continues until getline() can no longer read from the file
 			{
-				// cout << "Line " << lineCount << ": " << line << endl;
 				lines[lineCount] = line;
-
 				inputSize = lines[lineCount].length();
-				// cout << "Length of lines[lineCount].length(): " << inputSize << endl;
 
 				// convert from plaintext to binary
-
 				XORinput = providedXOR(baseXORinput, inputSize);
 				XORresult = XORdecrypt(line, binaryInput(XORinput));
 				cout << "Decryption Result: " << binarytoASCII(XORresult) << endl;
