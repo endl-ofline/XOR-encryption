@@ -108,16 +108,7 @@ int main()
 			XORresult = XORencrypt(userInput, XORinput); // function returns the encryption result of the two parameters
 			cout << "Encryption Result: " << XORresult << endl;
 
-			// do
-			{
-				// cout << "\nType '1' to decrypt your sentence: ";
-				// cin >> userDecrypt;
-			}// while (userDecrypt != 1);
-
-			string decryption = XORdecrypt(binaryInput(XORinput), XORresult);
-
-			// cout << "\nBinary Decryption Result: " << decryption; // raw return 
-			// cout << "\nASCII Decryption Result: " << binarytoASCII(decryption) << endl << endl; // converted return 
+			string decryption = XORdecrypt(binaryInput(XORinput), XORresult); 
 		}
 		else if (query == 3) // read input from a file
 		{
@@ -223,7 +214,7 @@ int main()
 	return 0;
 }
 
-string ASCIItoBinary(char inputChar) // takes an ASCII character and converts it into it's binary 
+string ASCIItoBinary(char inputChar) // takes an ASCII character and converts it into its binary 
 {
 	string binaryString;
 	binaryString = bitset<8>(inputChar).to_string(); // converting the output to a string to make it storable
@@ -248,7 +239,7 @@ string binarytoASCII(string input) // converts from 8bit binary to an ASCII char
 		}
 		ASCII += static_cast<char>(currentValue); // converts integer to ASCII character, which is appended onto the string
 	}
-	return ASCII; // moved out of loop to catch all values
+	return ASCII;
 
 } // end of function from (GeeksforGeeks, 2024)
 
